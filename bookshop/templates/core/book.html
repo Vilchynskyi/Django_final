@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+
+<div><h2>{{ book.title }}</h2></a>
+    {% if book.image %}
+        <div><img height="200" src="{{ book.image.url }}" alt="Vans"></div>
+    {% else %}
+        <div><img height="200" src="{% static 'img/no-img.png' %}"></div>
+    {% endif %}
+    <div>{{ book.price }}</div><br>
+    <div>{{ book.short_desc }}</div><br>
+
+</div>
+</body>
+</html>

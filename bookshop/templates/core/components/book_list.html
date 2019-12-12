@@ -1,0 +1,39 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+</head>
+<body>
+{% for book in book_list %}
+<div><a href="{{ book.get_absolute_url }}"><h2>{{ book.title }}</h2></a>
+    {% if book.image %}
+        <div><img height="200" src="{{ book.image.url }}" alt="Vans"></div>
+    {% else %}
+        <div><img height="200" src="{% static 'img/no-img.png' %}"></div>
+    {% endif %}
+    <div>{{ book.price }}</div><br>
+    <div>{{ book.short_desc }}</div><br>
+
+</div>
+{% endfor %}
+<div>
+    {% if book_list.has_previous %}
+      <a href="?page={{ book.previous_page_number }}"><</a>
+    {% endif %}
+
+    {% for page in book_list.paginator.page_range %}
+      {% if page == book_list.number %}
+        {{ page }}
+      {% else %}
+        <a href="?page={{ page }}">{{ page }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if book_list.has_next %}
+      <a href="?page={{ book_list.next_page_number }}">></a>
+    {% endif %}
+</div>
+</body>
+</html>
