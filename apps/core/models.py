@@ -24,6 +24,10 @@ class Category(models.Model):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+    class Meta:
+        verbose_name = 'категорию'
+        verbose_name_plural = 'категории'
+
 
 class Book(models.Model):
     title = models.CharField(max_length=70)
@@ -75,3 +79,7 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'книгу'
+        verbose_name_plural = 'книги'

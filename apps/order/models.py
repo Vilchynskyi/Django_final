@@ -22,6 +22,10 @@ class Order(models.Model):
     def __str__(self):
         return str(self.pk)
 
+    class Meta:
+        verbose_name = 'заказ'
+        verbose_name_plural = 'заказы'
+
 
 class OrderBook(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
