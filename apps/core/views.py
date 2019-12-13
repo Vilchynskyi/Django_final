@@ -19,6 +19,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['book_list'] = Book.objects.all()
+        context['category_list'] = Category.objects.all()
         return context
 
 
@@ -31,6 +32,11 @@ class CategoryView(DetailView):
         category = context['category']
         context['book_list'] = category.book_set.all()
         return context
+
+
+class CategoryListView(ListView):
+    template_name = 'core/category_list.html'
+    queryset = Category.objects.all()
 
 
 class BookDetailView(DetailView):
@@ -56,4 +62,3 @@ class BookListView(ListView):
 
         context['book_list'] = book_list
         return context
-

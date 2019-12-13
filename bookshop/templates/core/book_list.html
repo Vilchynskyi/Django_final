@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="{% url 'core:index' %}"><h1>Home</h1></a>
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% include 'core/components/book_list.html' %}
-</body>
-</html>
+
+{% endblock content %}

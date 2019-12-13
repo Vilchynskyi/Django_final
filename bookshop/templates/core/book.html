@@ -1,22 +1,36 @@
+{% extends 'base.html' %}
+
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book</title>
-</head>
-<body>
+{% block content %}
 
-<div><h2>{{ book.title }}</h2></a>
-    {% if book.image %}
-        <div><img height="200" src="{{ book.image.url }}" alt="Vans"></div>
-    {% else %}
-        <div><img height="200" src="{% static 'img/no-img.png' %}"></div>
-    {% endif %}
-    <div>{{ book.price }}</div><br>
-    <div>{{ book.short_desc }}</div><br>
+<div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card">
+        {% if book.image %}
+          <a href="{{ book.get_absolute_url }}"><img class="card-img" height="300" src="{{ book.image.url }}" alt="Vans"></a>
+        {% else %}
+          <a href="{{ book.get_absolute_url }}"><img class="card-img" height="300" src="{% static 'img/no_img.png' %}" alt="Vans"></a>
+        {% endif %}
+          <div class="card-body">
+              <h4 class="card-title"><a href="{{ book.get_absolute_url }}">title{{ book.title }}</a></h4>
+            <h6 class="card-subtitle mb-2 text-muted"><a href="{{ book.category.get_absolute_url }}">{{ book.category|title }}</a></h6>
+            <p class="card-text">{{ book.short_description|safe }}</p>
+          </div>
+          <div class="card-footer justify-content-between align-items-center">
+            <div class="d-flex flex-row justify-content-between">
+              <div class="price text-success"><h5 class="mt-4">{{ book.main_price }} грн</h5></div>
+              {% if book.discount > 0 %}
+                <del class="price text-secondary"><h5 class="mt-4">{{ book.price }} грн</h5></del>
+              {% endif %}
+            </div>
+            <form class="form-group" action="{% url 'order:cart-add' book.pk %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary mt-3">Добавить в корзину</button>
+            </form>
+          </div>
+        </div>
+      </div>
 
-</div>
-</body>
-</html>
+
+{% endblock content %}
+

@@ -20,8 +20,10 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.core.urls', namespace='core')),
     path('users/', include('apps.users.urls', namespace='users')),
     path('accounts/', include('django.contrib.auth.urls')),
-    # path('api/', include('apps.api.urls', namespace='api')),
+    path('api/', include('apps.api.urls')),
+    path('order/', include('apps.order.urls', namespace='order')),
+    path('', include('apps.core.urls', namespace='core')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

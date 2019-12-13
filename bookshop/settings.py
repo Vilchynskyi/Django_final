@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 LOCAL_APPS = [
     'apps.core',
     'apps.users',
-    'apps.api',
+    'apps.order',
 ]
 
 INSTALLED_APPS = [
@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'autoslug'
+    'autoslug',
+    'rest_framework',
+    'django_filters',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -139,3 +141,18 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/users/login/'
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    # ],
+    # 'DEFAULT_PARSER_CLASSES': [
+    #     'rest_framework.parsers.JSONParser',
+    # ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}

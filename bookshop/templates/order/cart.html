@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Корзина</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    {% for item in cart %}
+      {% with book=item.book %}
+        <div class="row">
+          <div class="col col-md-2">
+            {% if book.image %}
+              <img class="img-responsive" src="{{ book.image.url }}" alt="{{ book.title }}" width="120" height="80">
+            {% else %}
+              <img class="img-responsive" src="" alt="{{ book.title }}" width="120" height="80">
+            {% endif %}
+          </div>
+          <div class="col">
+            <h4>
+              <small>{{ book.title }}</small>
+            </h4>
+          </div>
+          <div class="col-4 row">
+            <div class="col text-md-right">
+              <h6>
+              <strong>{{ book.main_price }} грн. <span class="text-muted">x</span></strong>
+              <strong>{{ item.quantity }} <span class="text-muted"></span></strong>
+              {% comment %} <strong>Всего {{ item.total_price }} грн. <span class="text-muted"></span></strong> {% endcomment %}
+              </h6>
+            </div>
+            <div class="col text-md-right">
+              <form action="{% url 'order:cart-remove' book.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger btn-xs">x</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr>
+      {% endwith %}
+    {% empty %}
+      <span class="h4">Корзина пуста</span>
+    {% endfor %}
+    {% if cart %}
+    <div class="form-group btn-block btn-group">
+      <a href="{% url 'order:cart-clear' %}" class="btn btn-block btn-danger mt-3">Очистить корзину</a>
+      <a href="{% url 'order:checkout' %}" class="btn btn-block btn-success mt-3">Оформить заказ</a>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock content %}
